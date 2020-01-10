@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      username: mongodb-playground
+      password: mongodb-playground
+      database: mongodb-playground
