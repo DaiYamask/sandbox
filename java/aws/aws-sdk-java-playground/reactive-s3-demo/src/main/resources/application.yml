@@ -1,0 +1,6 @@
+aws:
+  s3:
+    region: ap-northeast-1
+    accessKeyId: {your_access_keyid}
+    secretAccessKey: {your_secret_access_key}
+    bucket: reactive-sample-with-aws-sdk-java
