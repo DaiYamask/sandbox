@@ -4,10 +4,11 @@ import { Home } from './home';
 import { store } from './redux';
 import { Provider } from 'react-redux';
 
-export default function App() {
-  return (
-      <Provider store={store} >
-        <Home />
-      </Provider>
-  );
-}
+// export default function App() {
+//   return (
+//       <Provider store={store} >
+//         <Home />
+//       </Provider>
+//   );
+// }
+export default from './storybook'
