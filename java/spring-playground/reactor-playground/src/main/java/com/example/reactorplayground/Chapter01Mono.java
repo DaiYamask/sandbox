@@ -23,4 +23,12 @@ public class Chapter01Mono {
     Mono<String> errorMono() {
         return Mono.error(IllegalStateException::new);
     }
+
+    Mono<String> useLog() {
+        return Mono.just("use log").log();
+    }
+
+    Mono<String> useLog(String category) {
+        return Mono.just("use log with category").log("category");
+    }
 }
