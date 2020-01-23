@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: dai-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - host: login.dai.local
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: keycloak
+              servicePort: 8000
+    - host: api.cargo.dai.local
+      http:
+        paths:
+          - path: /(.*)
+            backend:
+              serviceName: dai-cargo-gateway
+              servicePort: 8080
