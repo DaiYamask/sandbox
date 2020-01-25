@@ -22,6 +22,18 @@ You can use `curl` command.
 $ curl -O https://concourse-ci.org/docker-compose.yml
 ```
 
+## install fly cli
+
+1. Open http://localhost:8080/
+2. Click your OS icon to download `fly`
+3. Move `fly` to your local path.
+
+```
+$ sudo mv ~/Downloads/fly /usr/local/bin
+$ sudo chmod 0755 /usr/local/bin/fly
+$ fly -v 
+```
+
 # Login concourse with fly
 You can access your Concourse CI on `http://localhost:8080`.
 dowlaod `fly` CLI.
