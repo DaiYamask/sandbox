@@ -20,14 +20,14 @@ jobs:
             << : *task-config
             run:
               path: echo
-              args: ["This task was succeeed!"]
+              args: ["This task succeeed!"]
         on_abort:
-          task: task-success
+          task: task-aborted
           config:
             << : *task-config
             run:
               path: echo
-              args: ["This task was succeeed!"]
+              args: ["This task was aborted!"]
       - task: failing-task
         config:
           << : *task-config
@@ -61,4 +61,4 @@ jobs:
         << : *task-config 
         run:
           path: echo
-          args: ["This job was aouted!"]
+          args: ["This job was aborted!"]
