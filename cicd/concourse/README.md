@@ -54,6 +54,45 @@ fly -t tutorial set-pipeline \
 You can see first pipeline and job in the pipeline.
 Start job in manual with click ➕ icon.
 
+## fly watch
+watch your job status 👀
+
+```
+fly --target tutorial watch \
+  --job hello-world/job-hello-world
+```
+
+or
+
+```
+fly -t tutorial w \
+  -j hello-world/job-hello-world
+```
+
+## fly trigger-job
+trigger job with fly cli
+
+1. trigger
+```
+fly -t tutorial trigger-job \
+  -j hello-world/job-hello-world 
+```
+
+2. watch your job
+
+```
+fly -t tutorial w \
+  -j hello-world/job-hello-world
+```
+
+or 
+
+trigger and watch
+
+```
+fly -t tutorial trigger-job -j hello-world/job-hello-world -w
+```
+
 # [WIP] How to isntall on Mac
 1. Donwload binary
 
