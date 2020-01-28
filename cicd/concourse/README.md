@@ -90,7 +90,13 @@ or
 trigger and watch
 
 ```
-fly -t tutorial trigger-job -j hello-world/job-hello-world -w
+fly -t tutorial tj -j hello-world/job-hello-world -w
+```
+
+## fly destroy
+
+```
+fly -t tutorial destroy-pipeline -p hello-world
 ```
 
 # [WIP] How to isntall on Mac
