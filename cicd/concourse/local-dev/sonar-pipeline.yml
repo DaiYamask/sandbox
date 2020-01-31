@@ -1,0 +1,33 @@
+resources:
+  - name: sonar-sample
+    type: git
+    icon: github-face
+    source:
+      uri: https://github.com/DaiYamask/sonar-sample.git
+      branch: master
+  - name: timer
+    type: time
+    source:
+      interval: 1m
+
+jobs:
+  - name: sonar-pipeline
+    public: true
+    plan:
+      - get: sonar-sample
+      - get: timer
+        trigger: true
+      - task: mvn-sonar-plugin
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source: {repository: busybox}
+
+          inputs:
+            - name: sonar-sample
+          
+          run:
+            path: ls
+            args: [sonar-sample]
+          
