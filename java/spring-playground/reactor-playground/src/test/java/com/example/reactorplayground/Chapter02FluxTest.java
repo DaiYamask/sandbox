@@ -68,7 +68,7 @@ public class Chapter02FluxTest {
 
     @Test
     void generateFlux() {
-        final Flux<String> flux = this.chapter02Flux.generateFlux();
+        final Flux<String> flux = this.chapter02Flux.generateFlux().log();
         StepVerifier.create(flux)
                 .expectNext("3 x 0 = 0")
                 .expectNext("3 x 1 = 3")
@@ -86,19 +86,18 @@ public class Chapter02FluxTest {
 
     @Test
     void generateFluxWithMutable() {
-        final Flux<String> flux = this.chapter02Flux.generateFluxWithMutable().log();
-        StepVerifier.create(flux);
-//                .expectNext("3 x 0 = 0")
-//                .expectNext("3 x 1 = 3")
-//                .expectNext("3 x 2 = 6")
-//                .expectNext("3 x 3 = 9")
-//                .expectNext("3 x 4 = 12")
-//                .expectNext("3 x 5 = 15")
-//                .expectNext("3 x 6 = 18")
-//                .expectNext("3 x 7 = 21")
-//                .expectNext("3 x 8 = 24")
-//                .expectNext("3 x 9 = 27")
-//                .expectNext("3 x 10 = 30")
-//                .verifyComplete();
+        final Flux<String> flux = this.chapter02Flux.generateFluxWithMutable();
+        StepVerifier.create(flux)
+                .expectNext("3 x 1 = 3")
+                .expectNext("3 x 2 = 6")
+                .expectNext("3 x 3 = 9")
+                .expectNext("3 x 4 = 12")
+                .expectNext("3 x 5 = 15")
+                .expectNext("3 x 6 = 18")
+                .expectNext("3 x 7 = 21")
+                .expectNext("3 x 8 = 24")
+                .expectNext("3 x 9 = 27")
+                .expectNext("3 x 10 = 30")
+                .verifyComplete();
     }
 }

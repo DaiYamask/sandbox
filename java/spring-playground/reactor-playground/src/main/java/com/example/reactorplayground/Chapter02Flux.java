@@ -32,7 +32,7 @@ public class Chapter02Flux {
         return Flux.generate(
                 AtomicLong::new,
                 (state, sink) -> {
-                    long i = state.getAndIncrement();
+                    long i = state.incrementAndGet();
                     sink.next("3 x " + state + " = " + 3 * i);
                     if (i == 10) sink.complete();
                     return state;
