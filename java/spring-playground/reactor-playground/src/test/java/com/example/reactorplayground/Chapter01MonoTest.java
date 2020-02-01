@@ -53,4 +53,14 @@ class Chapter01MonoTest {
                 .verifyComplete();
 
     }
+
+    @Test
+    void subscribeTwice() {
+        final Mono<Integer> mono = Mono.just(1);
+        mono.subscribe();
+        mono.subscribe();
+
+        StepVerifier.create(mono)
+            .expectNext(1).verifyComplete();
+    }
 }
