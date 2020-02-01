@@ -2,6 +2,7 @@ package com.example.reactorplayground;
 
 import reactor.core.publisher.Flux;
 
+import java.time.Duration;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -38,5 +39,47 @@ public class Chapter02Flux {
                     return state;
                 }, (state -> System.out.println("state: " + state))
         );
+    }
+
+    public Flux<String> fluxWithHandle() {
+        return Flux.just(-1, 20, 1, 7, 2, 1, 14, 7, 5, 18, 19)
+                .handle((i, sink) -> {
+                    String letter = alphabet(i);
+                    if (letter != null) {
+                        sink.next(letter);
+                    }
+                });
+    }
+
+    public Flux<String> fluxOnErrorReturn() {
+        return Flux.just(3, 1, 0)
+                .map(i -> "100 / " + i + " = " + (100 / i))
+                .onErrorReturn("Divided by zero :(");
+    }
+
+    public Flux<String> fluxOnErrorReturnDefaultValue() {
+        return Flux.interval(Duration.ZERO.ofMillis(250))
+                .map(input -> {
+                    if (input < 3) return "tick " + input;
+                    throw new RuntimeException("Boom!!!");
+                })
+                .onErrorReturn("Uh oh :(");
+    }
+
+    public Flux<String> retry() {
+        return Flux.interval(Duration.ZERO.ofMillis(250))
+                .map(input -> {
+                    if (input < 3) return "tick " + input;
+                    throw new RuntimeException("Boom!!!");
+                })
+                .retry(1);
+    }
+
+    private String alphabet(int letterNumber) {
+        if (letterNumber < 1 || letterNumber > 26) {
+            return null;
+        }
+        int letterIndexAscii = 'A' + letterNumber - 1;
+        return  "" + (char) letterIndexAscii;
     }
 }

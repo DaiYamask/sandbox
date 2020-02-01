@@ -100,4 +100,47 @@ public class Chapter02FluxTest {
                 .expectNext("3 x 10 = 30")
                 .verifyComplete();
     }
+
+    @Test
+    void fluxWithHandle() {
+        final Flux<String> flux = this.chapter02Flux.fluxWithHandle();
+        StepVerifier.create(flux)
+                .expectNext("T", "A", "G", "B", "A", "N", "G", "E", "R", "S")
+                .verifyComplete();
+    }
+
+    @Test
+    void onErrorReturn() {
+        final Flux<String> flux = this.chapter02Flux.fluxOnErrorReturn();
+        StepVerifier.create(flux)
+                .expectNext("100 / 3 = 33")
+                .expectNext("100 / 1 = 100")
+                .expectNext("Divided by zero :(")
+                .verifyComplete();
+    }
+
+    @Test
+    void fluxOnErrorReturnDefaultValue() {
+        final Flux<String> tick = this.chapter02Flux.fluxOnErrorReturnDefaultValue();
+        StepVerifier.create(tick)
+                .expectNext("tick 0")
+                .expectNext("tick 1")
+                .expectNext("tick 2")
+                .expectNext("Uh oh :(")
+                .verifyComplete();
+    }
+
+    @Test
+    void retry() {
+        final Flux<String> retry = this.chapter02Flux.retry();
+        StepVerifier.create(retry)
+                .expectNext("tick 0")
+                .expectNext("tick 1")
+                .expectNext("tick 2")
+                .expectNext("tick 0")
+                .expectNext("tick 1")
+                .expectNext("tick 2")
+                .expectError(RuntimeException.class)
+                .verify();
+    }
 }
