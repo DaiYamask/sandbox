@@ -22,9 +22,16 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 @Log4j2
 public class FileUploadHandler {
 
+    public RouterFunction<ServerResponse> routes() {
+        return route().path("/", (builder) -> builder //
+                .GET("/hello", this::getHello) //
+                .POST("/upload", this::upload)
+        ).build();
+    }
+
     Mono<ServerResponse> getHello(ServerRequest request) {
         return ok().contentType(MediaType.TEXT_PLAIN)
-                .bodyValue("Hello Webflux");
+                .bodyValue("Hello");
     }
 
     Mono<ServerResponse> upload(ServerRequest request) {
@@ -33,13 +40,6 @@ public class FileUploadHandler {
                 .ofType(FilePart.class)
                 .flatMap(this::saveFile);
         return ok().contentType(MediaType.TEXT_PLAIN).body(mono, String.class);
-    }
-
-    public RouterFunction<ServerResponse> routes() {
-        return route().path("/", (builder) -> builder //
-                .GET("/", this::getHello) //
-                .POST("/upload", this::upload)
-        ).build();
     }
 
     private Mono<String> saveFile(FilePart filePart) {

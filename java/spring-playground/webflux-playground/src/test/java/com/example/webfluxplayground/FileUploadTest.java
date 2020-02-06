@@ -3,6 +3,7 @@ package com.example.webfluxplayground;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
@@ -21,10 +22,11 @@ public class FileUploadTest {
     private WebTestClient webTestClient;
 
     @Test
-    void hello() {
+    void helloWith() {
         this.webTestClient
-                .get().uri("/").accept(MediaType.TEXT_PLAIN).exchange()
-                .expectStatus().isOk().expectBody(String.class).isEqualTo("Hello Webflux");
+                .get().uri("/hello?name=<name>", "name").accept(MediaType.TEXT_PLAIN).exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class).isEqualTo("Hello name");
     }
 
     @Test
