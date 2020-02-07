@@ -8,6 +8,9 @@ import org.springframework.test.context.TestPropertySource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+
 /**
  * @author DAI Yamasaki
  */
@@ -17,6 +20,13 @@ class EmployeeRepositoryTest {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @BeforeEach
+    void setUp() {
+        final Employee employee = new Employee();
+        employee.setName("Taro Yamasaki");
+        this.employeeRepository.save(employee);
+    }
+
     @Test
     void save() {
         final Employee employee = new Employee();
@@ -25,5 +35,11 @@ class EmployeeRepositoryTest {
         final Employee savedEmployee = this.employeeRepository.save(employee);
         assertThat(savedEmployee.getId()).isNotNull();
 
+    }
+
+    @Test
+    void findAll() {
+        final Iterable<Employee> all = this.employeeRepository.findAll();
+        assertThat(all).isNotEmpty();
     }
 }
