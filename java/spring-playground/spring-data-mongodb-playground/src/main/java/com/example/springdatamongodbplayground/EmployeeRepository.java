@@ -1,5 +1,6 @@
 package com.example.springdatamongodbplayground;
 
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 /**

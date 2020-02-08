@@ -11,6 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.util.Optional;
+
 /**
  * @author DAI Yamasaki
  */
@@ -20,16 +22,20 @@ class EmployeeRepositoryTest {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    private Employee savedEmployee;
+
     @BeforeEach
     void setUp() {
-        final Employee employee = new Employee();
-        employee.setName("Taro Yamasaki");
-        this.employeeRepository.save(employee);
+        final Department development = new Department("Development");
+        final Department ops = new Department("Ops");
+        final Employee employee = new Employee("Solid Snake", 27, ops);
+        this.savedEmployee = this.employeeRepository.save(employee);
+        this.employeeRepository.save(new Employee("Solidus Snake", 42, development));
     }
 
     @Test
     void save() {
-        final Employee employee = new Employee();
+        final Employee employee = new Employee("Dai Yamasaki");
         employee.setName("Dai Yamasaki");
 
         final Employee savedEmployee = this.employeeRepository.save(employee);
@@ -41,5 +47,12 @@ class EmployeeRepositoryTest {
     void findAll() {
         final Iterable<Employee> all = this.employeeRepository.findAll();
         assertThat(all).isNotEmpty();
+    }
+
+    @Test
+    void findById() {
+        final Optional<Employee> employee = this.employeeRepository.findById(savedEmployee.getId());
+        assertThat(employee.get()).isNotNull();
+        assertThat(employee.get().getId()).isEqualTo(this.savedEmployee.getId());
     }
 }
