@@ -6,5 +6,5 @@ import org.springframework.data.repository.query.QueryByExampleExecutor;
 /**
  * @author DAI Yamasaki
  */
-public interface EmployeeRepository extends CrudRepository<Employee, String>, QueryByExampleExecutor<Employee> {
+public interface DepartmentRepository extends CrudRepository<Department, String>, QueryByExampleExecutor<Department> {
 }

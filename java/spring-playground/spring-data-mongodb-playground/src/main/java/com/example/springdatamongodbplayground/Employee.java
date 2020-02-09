@@ -16,6 +16,9 @@ public class Employee {
     @DBRef
     Department department;
 
+    public Employee() {
+    }
+
     public Employee(String name) {
         this.name = name;
     }
