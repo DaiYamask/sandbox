@@ -65,4 +65,14 @@ class EmployeeRepositoryTest {
         final Iterable<Employee> all = this.employeeRepository.findAll(employeeExample);
         assertThat(all).isNotEmpty();
     }
+
+    @Test
+    void delete() {
+        this.employeeRepository.deleteById(this.savedEmployee.getId());
+        ;
+        assertThat(this.employeeRepository.findAll().iterator().hasNext()).isTrue();
+
+        this.employeeRepository.deleteAll();
+        assertThat(this.employeeRepository.findAll().iterator().hasNext()).isFalse();
+    }
 }
