@@ -69,10 +69,18 @@ class EmployeeRepositoryTest {
     @Test
     void delete() {
         this.employeeRepository.deleteById(this.savedEmployee.getId());
-        ;
         assertThat(this.employeeRepository.findAll().iterator().hasNext()).isTrue();
-
         this.employeeRepository.deleteAll();
         assertThat(this.employeeRepository.findAll().iterator().hasNext()).isFalse();
+    }
+
+    @Test
+    void countByExample() {
+        final Employee employee = new Employee("Snake");
+        ExampleMatcher matcher = ExampleMatcher.matchingAny()
+                .withMatcher("name", ExampleMatcher.GenericPropertyMatcher::contains);
+        final Example<Employee> employeeExample = Example.of(employee, matcher);
+        assertThat(this.employeeRepository.count(employeeExample)).isEqualTo(2L);
+
     }
 }
