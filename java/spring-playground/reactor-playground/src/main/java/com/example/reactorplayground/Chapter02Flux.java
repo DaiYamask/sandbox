@@ -1,8 +1,10 @@
 package com.example.reactorplayground;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -73,6 +75,17 @@ public class Chapter02Flux {
                     throw new RuntimeException("Boom!!!");
                 })
                 .retry(1);
+    }
+
+    Flux<String> restoringMissingLetter(String s, List<String> words) {
+        Mono<String> mono = Mono.just(s);
+        return Flux.fromIterable(words)
+                .flatMap(word -> Flux.fromArray(word.split(" ")))
+                .concatWith(mono)
+                .distinct()
+                .sort()
+                .zipWith(Flux.range(1, Integer.MAX_VALUE),
+                        (string, count) -> String.format("%2d. %s", count, string));
     }
 
     private String alphabet(int letterNumber) {

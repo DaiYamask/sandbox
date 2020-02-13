@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
+import java.util.List;
+
 /**
  * @author DAI Yamasaki
  */
@@ -142,5 +144,20 @@ public class Chapter02FluxTest {
                 .expectNext("tick 2")
                 .expectError(RuntimeException.class)
                 .verify();
+    }
+
+    @Test
+    void restoringMissingLetter() {
+        final Flux<String> s = this.chapter02Flux.restoringMissingLetter("s", List.of("The previous",  "article noted the", "resemblance between"));
+        s.cache().subscribe(System.out::println);
+        StepVerifier.create(s)
+                .expectNext("1. The")
+                .expectNext("2. article")
+                .expectNext("3. between")
+                .expectNext("4. noted")
+                .expectNext("5. previous")
+                .expectNext("6. resemblance")
+                .expectNext("7. s")
+                .expectNext("8. the");
     }
 }
