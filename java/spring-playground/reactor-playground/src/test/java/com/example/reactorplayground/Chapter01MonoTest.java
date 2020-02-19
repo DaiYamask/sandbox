@@ -2,7 +2,12 @@ package com.example.reactorplayground;
 
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 import reactor.test.StepVerifier;
+
+import java.util.concurrent.atomic.AtomicReference;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author DAI Yamasaki
@@ -62,5 +67,16 @@ class Chapter01MonoTest {
 
         StepVerifier.create(mono)
             .expectNext(1).verifyComplete();
+    }
+
+    @Test
+    void fromRunnableNormal() {
+        AtomicReference<Thread> t = new AtomicReference<>();
+        StepVerifier.create(Mono.fromRunnable(() -> t.set(Thread.currentThread())).log()
+                .subscribeOn(Schedulers.single()))
+                .verifyComplete();
+
+        assertThat(t).isNotNull();
+        assertThat(t).isNotEqualTo(Thread.currentThread());
     }
 }
